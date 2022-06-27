@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Edição de quartos";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="">Edição de quartos</h3>
+    </div>
+</div>
+
+<br />
+
+<form class="row">
+    <div class="col-md-3">
+        <label for="inputNumber" class="form-label">Número</label>
+        <input type="number" class="form-control" id="inputNumber" placeholder="Digite o número">
+    </div>
+    <div class="col-md-3">
+        <label for="inputMaximumOccupancy" class="form-label">Ocupação máxima</label>
+        <input type="number" class="form-control" id="inputMaximumOccupancy" placeholder="Digite a ocupação máxima">
+    </div>
+    <div class="col-md-3">
+        <label for="inputFloor" class="form-label">Andar</label>
+        <input type="number" class="form-control" id="inputFloor" placeholder="Digite o andar">
+    </div>
+    <div class="col-md-3">
+        <label for="inputDailyValue" class="form-label">Valor da diária</label>
+        <input type="number" class="form-control" id="inputDailyValue" placeholder="Digite o valor da diária">
+    </div>
+    <div class="col-md-12">
+        <label for="textareaDescription">Descrição</label>
+        <textarea class="form-control" id="textareaDescription" placeholder="Digite uma breve descrição, contendo informações do quarto"></textarea>
+    </div>
+    <div class="col-md-12">
+        <label for="status">Status</label>
+        <div class="form-check" id="status">
+            <input class="form-check-input" type="radio" name="status" id="statusClean">
+            <label class="form-check-label" for="statusClean">
+                Limpo
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="status" id="statusDirty">
+            <label class="form-check-label" for="statusDirty">
+                Sujo
+            </label>
+        </div>
+    </div>
+    <div class="col-12 mt-4">
+        <button type="submit" class="btn btn-primary">Alterar</button>
+        <a class="btn btn-secondary" asp-controller="Room" asp-action="Index" role="button">Voltar</a>
+    </div>
+</form>

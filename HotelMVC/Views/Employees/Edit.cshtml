@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Edição de funcionários";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="">Edição de funcionários</h3>
+    </div>
+</div>
+
+<br />
+
+<form class="row">
+    <div class="col-md-6">
+        <label for="inputName" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="inputName" placeholder="Digite o nome do funcionário">
+    </div>
+    <div class="col-md-6">
+        <label for="inputCpf" class="form-label">CPF</label>
+        <input type="text" class="form-control" id="inputCpf" placeholder="Digite o CPF do funcionário">
+    </div>
+    <div class="col-md-6">
+        <label for="inputEmail" class="form-label">Email</label>
+        <input type="email" class="form-control" id="inputEmail" placeholder="Digite o email do funcionário">
+    </div>
+    <div class="col-md-6">
+        <label for="inputTelephone" class="form-label">Telefone</label>
+        <input type="text" class="form-control" id="inputTelephone" placeholder="Digite o telefone do funcionário">
+    </div>
+    <div class="col-12">
+        <label for="inputCity" class="form-label">Cidade</label>
+        <input type="text" class="form-control" id="inputCity" placeholder="Digite a cidade do funcionário">
+    </div>
+    <div class="col-4">
+        <label for="inputRoad" class="form-label">Rua</label>
+        <input type="text" class="form-control" for="inputRoad" placeholder="Digite a rua do funcionário">
+    </div>
+    <div class="col-4">
+        <label for="inputDistrict" class="form-label">Bairro</label>
+        <input type="text" class="form-control" for="inputDistrict" placeholder="Digite o bairro do funcionário">
+    </div>
+    <div class="col-4">
+        <label for="inputNumber" class="form-label">Number</label>
+        <input type="number" class="form-control" id="inputNumber" placeholder="Digite o número da casa do funcionário">
+    </div>
+    <div class="col-4">
+        <label for="inputUser" class="form-label">Usuário</label>
+        <input type="text" class="form-control" for="inputUser" placeholder="Digite o usuário do funcionário">
+    </div>
+    <div class="col-4">
+        <label for="inputPassword" class="form-label">Senha</label>
+        <input type="text" class="form-control" for="inputPassword" placeholder="Digite a senha do funcionário">
+    </div>
+    <div class="col-4">
+        <label for="inputAdmission" class="form-label">Data admissão</label>
+        <input type="date" class="form-control" id="inputAdmission">
+    </div>
+    <div class="col-12 mt-4">
+        <button type="submit" class="btn btn-primary">Alterar</button>
+        <a class="btn btn-secondary" asp-controller="Employees" asp-action="Index" role="button">Voltar</a>
+    </div>
+</form>

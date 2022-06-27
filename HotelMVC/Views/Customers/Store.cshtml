@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Cadastro de clientes";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="">Cadastro de clientes</h3>
+    </div>
+</div>
+
+<br />
+
+<form class="row">
+    <div class="col-md-6">
+        <label for="inputName" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="inputName" placeholder="Digite o seu nome">
+    </div>
+    <div class="col-md-6">
+        <label for="inputCpf" class="form-label">CPF</label>
+        <input type="text" class="form-control" id="inputCpf" placeholder="Digite o seu CPF">
+    </div>
+    <div class="col-md-6">
+        <label for="inputEmail" class="form-label">Email</label>
+        <input type="email" class="form-control" id="inputEmail" placeholder="Digite o seu email">
+    </div>
+    <div class="col-md-6">
+        <label for="inputTelephone" class="form-label">Telefone</label>
+        <input type="text" class="form-control" id="inputTelephone" placeholder="Digite o seu telefone">
+    </div>
+    <div class="col-12">
+        <label for="inputCity" class="form-label">Cidade</label>
+        <input type="text" class="form-control" id="inputCity" placeholder="Digite a sua cidade">
+    </div>
+    <div class="col-4">
+        <label for="inputRoad" class="form-label">Rua</label>
+        <input type="text" class="form-control" for="inputRoad" placeholder="Digite a sua rua">
+    </div>
+    <div class="col-4">
+        <label for="inputDistrict" class="form-label">Bairro</label>
+        <input type="text" class="form-control" for="inputDistrict" placeholder="Digite o seu bairro">
+    </div>
+    <div class="col-4">
+        <label for="inputNumber" class="form-label">Number</label>
+        <input type="number" class="form-control" id="inputNumber" placeholder="Digite o número da sua casa">
+    </div>
+    <div class="col-12 mt-4">
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+        <a class="btn btn-secondary" asp-controller="Customers" asp-action="Index" role="button">Voltar</a>
+    </div>
+</form>

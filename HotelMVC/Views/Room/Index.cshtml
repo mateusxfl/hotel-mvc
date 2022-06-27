@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "Listagem de quartos";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-9">
+                <h3 class="">Listagem de quartos</h3>
+            </div>
+            <div class="col-md-3">
+                <a asp-controller="Room" asp-action="Store" class="btn btn-success btn-block">Adicionar novo quarto</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div class="text-center">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Ocupação máxima</th>
+                <th scope="col">Andar</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Valor diária</th>
+                <th scope="col">Status</th>
+                <th scope="col">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>mdo</td>
+                <td>Otto</td>
+                <td>mdo</td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a role="button" asp-controller="Room" asp-action="Edit" class="btn btn-warning">Editar</a>
+                        <a href="#" role="button" class="btn btn-danger">Apagar</a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>fat</td>
+                <td>Otto</td>
+                <td>mdo</td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a role="button" asp-controller="Room" asp-action="Edit" class="btn btn-warning">Editar</a>
+                        <a href="#" role="button" class="btn btn-danger">Apagar</a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>fat</td>
+                <td>Otto</td>
+                <td>mdo</td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a role="button" asp-controller="Room" asp-action="Edit" class="btn btn-warning">Editar</a>
+                        <a href="#" role="button" class="btn btn-danger">Apagar</a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
