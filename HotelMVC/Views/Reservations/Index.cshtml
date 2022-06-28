@@ -43,50 +43,10 @@
                 <td>mdo</td>
                 <td>
                     <div class="btn-group" role="group">
-                        <a role="button" asp-controller="#" asp-action="#" class="btn btn-primary">IN</a>
-                        <a role="button" asp-controller="#" asp-action="#" class="btn btn-info">OUT</a>
-                    </div>
-                </td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a role="button" asp-controller="Reservations" asp-action="Edit" class="btn btn-warning">Editar</a>
-                        <a href="#" role="button" class="btn btn-danger">Apagar</a>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>fat</td>
-                <td>Otto</td>
-                <td>mdo</td>
-                <td>mdo</td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a role="button" asp-controller="#" asp-action="#" class="btn btn-primary">IN</a>
-                        <a role="button" asp-controller="#" asp-action="#" class="btn btn-info">OUT</a>
-                    </div>
-                </td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a role="button" asp-controller="Reservations" asp-action="Edit" class="btn btn-warning">Editar</a>
-                        <a href="#" role="button" class="btn btn-danger">Apagar</a>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>fat</td>
-                <td>Otto</td>
-                <td>mdo</td>
-                <td>mdo</td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a role="button" asp-controller="#" asp-action="#" class="btn btn-primary">IN</a>
-                        <a role="button" asp-controller="#" asp-action="#" class="btn btn-info">OUT</a>
+                        @*Let it click only if the booking status is confirmed.*@
+                        <button asp-controller="#" asp-action="#" class="btn btn-primary" data-toggle="modal" data-target="#entryModal">IN</button>
+                        @*Let click only if you are already checked in.*@
+                        <button asp-controller="#" asp-action="#" class="btn btn-info" data-toggle="modal" data-target="#exitModal">OUT</button>
                     </div>
                 </td>
                 <td>
@@ -98,6 +58,60 @@
             </tr>
         </tbody>
     </table>
+</div>
+
+<div class="modal fade" id="entryModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Realizar CHECK-IN</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-12">
+                    <label for="inputEntryDate" class="form-label">Data de entrada</label>
+                    <input type="date" readonly class="form-control" id="inputEntryDate" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                </div>
+                <div class="col-12 mt-3">
+                    <label for="inputEntryHour" class="form-label">Hora entrada</label>
+                    <input type="time" readonly class="form-control" id="inputEntryHour" value="@DateTime.Now.ToString("HH:mm")">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exitModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Realizar CHECK-OUT</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-12">
+                    <label for="inputExitDate" class="form-label">Data de saída</label>
+                    <input type="date" readonly class="form-control" id="inputExitDate" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                </div>
+                <div class="col-12 mt-3">
+                    <label for="inputExitHour" class="form-label">Hora saída</label>
+                    <input type="time" readonly class="form-control" id="inputExitHour" value="@DateTime.Now.ToString("HH:mm")">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary">Confirmar</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
