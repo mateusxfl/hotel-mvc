@@ -1,0 +1,99 @@
+﻿@{
+    ViewData["Title"] = "Cadastro de reservas";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="">Cadastro de reservas</h3>
+    </div>
+</div>
+
+<br />
+
+<form class="row">
+
+    <div class="col-md-6">
+        <label for="inputCustomer" class="form-label">Cliente</label>
+        <select class="form-select form-control" id="inputCustomer">
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+        </select>
+    </div>
+    <div class="col-md-6">
+        <label for="inputRoom" class="form-label">Quarto</label>
+        <select class="form-select form-control" id="inputRoom">
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+        </select>
+    </div>
+    <div class="col-4">
+        <label for="inputNumberOfOccupants" class="form-label">Número de ocupantes</label>
+        <input type="number" class="form-control" id="inputNumberOfOccupants" placeholder="Digite o número de ocupantes">
+    </div>
+    <div class="col-4">
+        <label for="inputExpectedEntryDate" class="form-label">Data de entrada esperada</label>
+        <input type="date" class="form-control" id="inputExpectedEntryDate">
+    </div>
+    <div class="col-4">
+        <label for="inputExpectedDepartureDate" class="form-label">Data de saída esperada</label>
+        <input type="date" class="form-control" id="inputExpectedDepartureDate">
+    </div>
+    <div class="col-md-12">
+        <label for="status">Status da reserva</label>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="form-check mr-4" id="status">
+                    <input class="form-check-input statusReservation" value="1" type="radio" name="status" id="statusReservationConfirmed">
+                    <label class="form-check-label" for="statusReservationConfirmed">
+                        Confirmada
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input statusReservation" value="0" type="radio" name="status" id="statusReservationNotConfirmed">
+                    <label class="form-check-label" for="statusReservationNotConfirmed">
+                        Não confirmada
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 mt-1" id="payment" style="display: none;">
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <label for="inputReservation" class="form-label">Valor da reserva</label>
+                <input type="number" class="form-control" id="inputReservation" placeholder="Digite o valor da reserva" readonly>
+            </div>
+            <div class="col-md-4">
+                <label for="inputFormOfPayment" class="form-label">Forma de pagamento</label>
+                <input type="text" class="form-control" id="inputFormOfPayment" placeholder="Digite a forma de pagamento">
+            </div>
+            <div class="col-md-4">
+                <label for="inputProof" class="form-label">Comprovante</label>
+                <input type="text" class="form-control" id="inputProof" placeholder="Digite o comprovante">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 mt-4">
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+        <a class="btn btn-secondary" asp-controller="Employees" asp-action="Index" role="button">Voltar</a>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        $(".statusReservation").click(function () {
+            var value = $('input:radio[name=status]:checked').val();
+
+            if (value == 1) {
+                $('#payment').css({"display": ""});
+            } else {
+                $('#payment').css({ "display": "none" });
+            }
+        });
+    </script>
+}
