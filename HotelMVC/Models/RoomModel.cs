@@ -7,7 +7,7 @@ namespace HotelMVC.Models
 {
     public class RoomModel
     {
-        public int Number { get; set; }
+        public int Id { get; set; }
         public int MaximumOccupancy { get; set; }
         public int Floor { get; set; }
         public string Description { get; set; }
