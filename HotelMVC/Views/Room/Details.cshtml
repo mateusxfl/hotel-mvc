@@ -1,0 +1,21 @@
+﻿@model RoomModel
+@{
+    ViewData["Title"] = "Modal deleção de quartos";
+}
+
+<div class="modal-body">
+    <b>Realmente deseja apagar o quarto de número @Model.Id ?</b>
+
+    <p>
+        <br />
+        Máximo de ocupantes: @Model.MaximumOccupancy <br />
+        Andar: @Model.Floor <br />
+        Descrição: @Model.Description <br />
+        Valor da diária: @Model.DailyValue <br />
+        Status: @Model.Status <br />
+    </p>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+    <a role="button" asp-route-id="@Model.Id" asp-controller="Room" asp-action="Destroy" class="btn btn-danger">Apagar</a>
+</div>

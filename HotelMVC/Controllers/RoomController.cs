@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HotelMVC.Models;
+using HotelMVC.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +10,18 @@ namespace HotelMVC.Controllers
 {
     public class RoomController : Controller
     {
+        private readonly IRoomRepository _roomRepository;
+
+        public RoomController(IRoomRepository roomRepository)
+        {
+            _roomRepository = roomRepository;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            List<RoomModel> rooms = _roomRepository.FindAll();
+
+            return View(rooms);
         }
 
         public IActionResult Store()
@@ -18,14 +29,38 @@ namespace HotelMVC.Controllers
             return View();
         }
 
-        public IActionResult Edit()
+        public IActionResult Edit(int id)
         {
-            return View();
+            RoomModel room = _roomRepository.FindById(id);
+
+            return View(room);
         }
 
-        public IActionResult Destroy()
+        public IActionResult Details(int id)
         {
-            return View();
+            RoomModel room = _roomRepository.FindById(id);
+
+            return PartialView(room);
+        }
+
+        [HttpPost]
+        public IActionResult Store(RoomModel room)
+        {
+            _roomRepository.Create(room);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Edit(RoomModel room)
+        {
+            _roomRepository.Update(room);
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Destroy(int id)
+        {
+            _roomRepository.Delete(id);
+            return RedirectToAction("Index");
         }
     }
 }

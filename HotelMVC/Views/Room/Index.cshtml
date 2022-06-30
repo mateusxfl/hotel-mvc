@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<RoomModel>
+@{
     ViewData["Title"] = "Listagem de quartos";
 }
 
@@ -31,59 +32,60 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>mdo</td>
-                <td>Otto</td>
-                <td>mdo</td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a role="button" asp-controller="Room" asp-action="Edit" class="btn btn-warning">Editar</a>
-                        <a href="#" role="button" class="btn btn-danger">Apagar</a>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>fat</td>
-                <td>Otto</td>
-                <td>mdo</td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a role="button" asp-controller="Room" asp-action="Edit" class="btn btn-warning">Editar</a>
-                        <a href="#" role="button" class="btn btn-danger">Apagar</a>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>fat</td>
-                <td>Otto</td>
-                <td>mdo</td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a role="button" asp-controller="Room" asp-action="Edit" class="btn btn-warning">Editar</a>
-                        <a href="#" role="button" class="btn btn-danger">Apagar</a>
-                    </div>
-                </td>
-            </tr>
+            @if (Model != null && Model.Any())
+            {
+                foreach (RoomModel room in Model)
+                {
+                    <tr>
+                        <th scope="row">@room.Id</th>
+                        <td>@room.MaximumOccupancy</td>
+                        <td>@room.Floor</td>
+                        <td>@room.Description</td>
+                        <td>@room.DailyValue</td>
+                        <td>@room.Status</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a role="button" asp-route-id="@room.Id" asp-controller="Room" asp-action="Edit" class="btn btn-warning">Editar</a>
+                                <a role="button" class="btn btn-danger btnDelete" data-value="@room.Id">Apagar</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
         </tbody>
     </table>
 </div>
 
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+</div>
+
 @section Scripts {
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#myTable').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
                 }
+            });
+        });
+
+        $(document).ready(function() {
+            $(".btnDelete").click(function() {
+                var id = $(this).data("value");
+                $("#modalContent").load("/Room/Details/" + id, function() {
+                    $("#deleteModal").modal("show");
+                });
             });
         });
     </script>
