@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<EmployeesModel>
+@{
     ViewData["Title"] = "Listagem de funcionários";
 }
 
@@ -36,65 +37,47 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>mdo</td>
-                <td>Otto</td>
-                <td>mdo</td>
-                <td>mdo</td>
-                <td>Otto</td>
-                <td>mdo</td>
-                <td>Otto</td>
-                <td>mdo</td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a role="button" asp-controller="Employees" asp-action="Edit" class="btn btn-warning">Editar</a>
-                        <a href="#" role="button" class="btn btn-danger">Apagar</a>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>fat</td>
-                <td>Otto</td>
-                <td>mdo</td>
-                <td>mdo</td>
-                <td>Otto</td>
-                <td>mdo</td>
-                <td>Otto</td>
-                <td>mdo</td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a role="button" asp-controller="Employees" asp-action="Edit" class="btn btn-warning">Editar</a>
-                        <a href="#" role="button" class="btn btn-danger">Apagar</a>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>fat</td>
-                <td>Otto</td>
-                <td>mdo</td>
-                <td>mdo</td>
-                <td>Otto</td>
-                <td>mdo</td>
-                <td>Otto</td>
-                <td>mdo</td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a role="button" asp-controller="Employees" asp-action="Edit" class="btn btn-warning">Editar</a>
-                        <a href="#" role="button" class="btn btn-danger">Apagar</a>
-                    </div>
-                </td>
-            </tr>
+            @if (Model != null & Model.Any())
+            {
+                foreach (EmployeesModel employee in Model)
+                {
+                <tr>
+                    <th scope="row">@employee.Id</th>
+                    <td>@employee.Name</td>
+                    <td>@employee.Cpf</td>
+                    <td>@employee.Email</td>
+                    <td>@employee.Telephone</td>
+                    <td>@employee.Road</td>
+                    <td>@employee.District</td>
+                    <td>@employee.Number</td>
+                    <td>@employee.City</td>
+                    <td>@employee.User</td>
+                    <td>@employee.Admission</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a role="button" asp-route-id="@employee.Id" asp-controller="Employees" asp-action="Edit" class="btn btn-warning">Editar</a>
+                            <a role="button" class="btn btn-danger btnDelete" data-value="@employee.Id">Apagar</a>
+                        </div>
+                    </td>
+                </tr>
+                }
+            }
         </tbody>
     </table>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="modalContent"></div>
+    </div>
+  </div>
 </div>
 
 @section Scripts {
@@ -104,6 +87,15 @@
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
                 }
+            });
+        });
+
+        $(document).ready(function() {
+            $(".btnDelete").click(function() {
+                var id = $(this).data("value");
+                $("#modalContent").load("/Employees/Details/" + id, function() {
+                    $("#deleteModal").modal("show");
+                });
             });
         });
     </script>
