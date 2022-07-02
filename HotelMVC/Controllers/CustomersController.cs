@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HotelMVC.Models;
+using HotelMVC.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +10,19 @@ namespace HotelMVC.Controllers
 {
     public class CustomersController : Controller
     {
+
+        private readonly ICustomerRepository _customerRepository;
+
+        public CustomersController(ICustomerRepository customerRepository)
+        {
+            _customerRepository = customerRepository;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            List<CustomersModel> customers = _customerRepository.FindAll();
+
+            return View(customers);
         }
 
         public IActionResult Store()
@@ -18,14 +30,38 @@ namespace HotelMVC.Controllers
             return View();
         }
 
-        public IActionResult Edit()
+        public IActionResult Edit(int id)
         {
-            return View();
+            CustomersModel customer = _customerRepository.FindById(id);
+
+            return View(customer);
         }
 
-        public IActionResult Destroy()
+        public IActionResult Details(int id)
         {
-            return View();
+            CustomersModel customer = _customerRepository.FindById(id);
+
+            return PartialView(customer);
+        }
+
+        [HttpPost]
+        public IActionResult Store(CustomersModel customer)
+        {
+            _customerRepository.Create(customer);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Edit(CustomersModel customer)
+        {
+            _customerRepository.Update(customer);
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Destroy(int id)
+        {
+            _customerRepository.Delete(id);
+            return RedirectToAction("Index");
         }
     }
 }

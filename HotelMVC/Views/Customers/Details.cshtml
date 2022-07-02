@@ -1,0 +1,24 @@
+﻿@model CustomersModel
+@{
+    ViewData["Title"] = "Modal deleção de clientes";
+}
+
+<div class="modal-body">
+    <b>Realmente deseja apagar o cliente @Model.Name ?</b>
+
+    <p>
+        <br />
+        ID: @Model.Id <br />
+        CPF: @Model.Cpf <br />
+        Email: @Model.Email <br />
+        Telefone: @Model.Telephone <br />
+        Rua: @Model.Road <br />
+        Estado: @Model.District <br />
+        Número: @Model.Number <br />
+        Cidade: @Model.City <br />
+    </p>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+    <a role="button" asp-route-id="@Model.Id" asp-controller="Customers" asp-action="Destroy" class="btn btn-danger">Apagar</a>
+</div>

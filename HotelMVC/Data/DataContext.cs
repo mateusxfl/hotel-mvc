@@ -11,5 +11,7 @@ namespace HotelMVC.Data
 
         public DbSet<RoomModel> Rooms { get; set; }
 
+        public DbSet<CustomersModel> Customers { get; set; }
+
     }
 }

@@ -29,6 +29,7 @@ namespace HotelMVC
             services.AddControllersWithViews();
             services.AddEntityFrameworkNpgsql().AddDbContext<DataContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DataBase")));
             services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
