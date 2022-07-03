@@ -1,17 +1,18 @@
 ﻿@model HotelMVC.Models.ReservationModels.ReservationFormViewModel
 @{
-    ViewData["Title"] = "Cadastro de reservas";
+    ViewData["Title"] = "Edição de reservas";
 }
 
 <div class="row">
     <div class="col-md-12">
-        <h3 class="">Cadastro de reservas</h3>
+        <h3 class="">Edição de reservas</h3>
     </div>
 </div>
 
 <br />
 
-<form class="row" asp-controller="Reservations" asp-action="Store" method="post">
+<form class="row" asp-controller="Reservations" asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Reservation.Id" />
     <div class="col-md-6">
         <label for="inputCustomer" class="form-label">Cliente</label>
         <select class="form-select form-control" asp-for="Reservation.CustomerId" asp-items="@(new SelectList(Model.Customers, "Id", "Name"))" id="inputCustomer"></select>

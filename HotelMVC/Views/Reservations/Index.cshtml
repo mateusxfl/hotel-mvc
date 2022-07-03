@@ -1,4 +1,5 @@
-﻿@{
+﻿@model HotelMVC.Models.ReservationModels.ReservationIndexViewModel
+@{
     ViewData["Title"] = "Listagem de reservas";
 }
 
@@ -28,36 +29,64 @@
                 <th scope="col">Entrada prevista</th>
                 <th scope="col">Saída prevista</th>
                 <th scope="col">Status</th>
-                <th scope="col">Check-in | Check-out </th>
+                <th scope="col">Checks </th>
                 <th scope="col">Ações</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>mdo</td>
-                <td>Otto</td>
-                <td>mdo</td>
-                <td>mdo</td>
-                <td>
-                    <div class="btn-group" role="group">
-                        @*Let it click only if the booking status is confirmed.*@
-                        <button asp-controller="#" asp-action="#" class="btn btn-primary" data-toggle="modal" data-target="#entryModal">IN</button>
-                        @*Let click only if you are already checked in.*@
-                        <button asp-controller="#" asp-action="#" class="btn btn-info" data-toggle="modal" data-target="#exitModal">OUT</button>
-                    </div>
-                </td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a role="button" asp-controller="Reservations" asp-action="Edit" class="btn btn-warning">Editar</a>
-                        <a href="#" role="button" class="btn btn-danger">Apagar</a>
-                    </div>
-                </td>
-            </tr>
+            @if(Model != null && Model.Reservations.Any())
+            {
+                foreach (HotelMVC.Models.ReservationModels.ReservationsModel reservation in Model.Reservations)
+                {
+                    <tr>
+                        <th scope="row">@reservation.Id</th>
+                        <td>@Model.Customers.Find(c => c.Id == reservation.CustomerId).Name</td>
+                        <td>@Model.Rooms.Find(r => r.Id == reservation.RoomId).Id</td>
+                        <td>@reservation.NumberOfOccupants</td>
+                        <td>@reservation.ExpectedEntryDate</td>
+                        <td>@reservation.ExpectedDepartureDate</td>
+                        <td>@(@reservation.Status == 1 ? "Confirmado" : "Não confirmado")</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                @*Let it click only if the booking status is confirmed.*@
+                                @if (@reservation.Status == 1)
+                                {
+                                    <button asp-controller="#" asp-action="#" class="btn btn-primary" data-toggle="modal" data-target="#entryModal">IN</button>
+                                }
+                                else
+                                {
+                                    <button asp-controller="#" asp-action="#" disabled class="btn btn-primary" data-toggle="modal" data-target="#entryModal">IN</button>
+                                }
+
+                                @*Let click only if you are already checked in.*@
+                                <button asp-controller="#" asp-action="#" class="btn btn-info" data-toggle="modal" data-target="#exitModal">OUT</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a role="button" asp-route-id="@reservation.Id" asp-controller="Reservations" asp-action="Edit" class="btn btn-warning">Editar</a>
+                                <a role="button" class="btn btn-danger btnDelete" data-value="@reservation.Id">Apagar</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
         </tbody>
     </table>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div id="modalContent"></div>
+        </div>
+    </div>
 </div>
 
 <div class="modal fade" id="entryModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
@@ -121,6 +150,15 @@
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
                 }
+            });
+        });
+
+        $(document).ready(function() {
+            $(".btnDelete").click(function() {
+                var id = $(this).data("value");
+                $("#modalContent").load("/Reservations/Details/" + id, function() {
+                    $("#deleteModal").modal("show");
+                });
             });
         });
     </script>

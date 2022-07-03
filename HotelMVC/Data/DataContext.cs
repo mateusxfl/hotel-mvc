@@ -1,4 +1,5 @@
 ﻿using HotelMVC.Models;
+using HotelMVC.Models.ReservationModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelMVC.Data
@@ -15,5 +16,6 @@ namespace HotelMVC.Data
 
         public DbSet<EmployeesModel> Employees { get; set; }
 
+        public DbSet<ReservationsModel> Reservations { get; set; }
     }
 }

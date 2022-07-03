@@ -1,0 +1,22 @@
+﻿@model HotelMVC.Models.ReservationModels.ReservationDetailsViewModel
+@{
+    ViewData["Title"] = "Modal deleção de reservas";
+}
+
+<div class="modal-body">
+    <b>Realmente deseja apagar a reserva do(a) cliente @Model.Customer.Name ?</b>
+
+    <p>
+        <br />
+        ID: @Model.Reservation.Id <br />
+        Quarto: @Model.Room.Id <br />
+        Ocupantes: @Model.Reservation.NumberOfOccupants <br />
+        Entrada prevista: @Model.Reservation.ExpectedEntryDate <br />
+        Saída prevista: @Model.Reservation.ExpectedDepartureDate <br />
+        Status: @(@Model.Reservation.Status == 1 ? "Confirmado" : "Não confirmado") <br />
+    </p>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+    <a role="button" asp-route-id="@Model.Reservation.Id" asp-controller="Reservations" asp-action="Destroy" class="btn btn-danger">Apagar</a>
+</div>
