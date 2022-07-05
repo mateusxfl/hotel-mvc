@@ -48,18 +48,32 @@
                         <td>@(@reservation.Status == 1 ? "Confirmado" : "Não confirmado")</td>
                         <td>
                             <div class="btn-group" role="group">
-                                @*Let it click only if the booking status is confirmed.*@
                                 @if (@reservation.Status == 1)
                                 {
-                                    <button asp-controller="#" asp-action="#" class="btn btn-primary" data-toggle="modal" data-target="#entryModal">IN</button>
+                                    <button role="button" class="btn btn-danger btnEditPayment" data-value="@reservation.Id">PAY</button>
                                 }
                                 else
                                 {
-                                    <button asp-controller="#" asp-action="#" disabled class="btn btn-primary" data-toggle="modal" data-target="#entryModal">IN</button>
+                                    <button role="button" class="btn btn-danger btnCreatePayment" data-value="@reservation.Id">PAY</button>
                                 }
 
-                                @*Let click only if you are already checked in.*@
-                                <button asp-controller="#" asp-action="#" class="btn btn-info" data-toggle="modal" data-target="#exitModal">OUT</button>
+                                @if (@reservation.Status == 1 @*&& Model.Checkin.Find(r => r.Id == reservation.RoomId) == null*@)
+                                {
+                                    <button role="button" class="btn btn-primary btnCheckIn" data-value="@reservation.Id">IN</button>
+                                }
+                                else
+                                {
+                                    <button role="button" class="btn btn-primary btnCheckIn" data-value="@reservation.Id">IN</button>
+                                }
+
+                                @if (@reservation.Status == 1 @*&& Model.Checkin.Find(r => r.Id == reservation.RoomId) == null*@)
+                                {
+                                    <button role="button" class="btn btn-info btnCheckOut" data-value="@reservation.Id">OUT</button>
+                                }
+                                else
+                                {
+                                    <button role="button" class="btn btn-info btnCheckOut" data-value="@reservation.Id">OUT</button>
+                                }
                             </div>
                         </td>
                         <td>
@@ -84,7 +98,35 @@
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div id="modalContent"></div>
+        <div id="modalContentDelete"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="createPaymentModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Cadastro de pagamentos</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div id="modalContentCreatePayment"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editPaymentModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edição de pagamentos</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div id="modalContentEditPayment"></div>
         </div>
     </div>
 </div>
@@ -151,13 +193,25 @@
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
                 }
             });
-        });
 
-        $(document).ready(function() {
             $(".btnDelete").click(function() {
                 var id = $(this).data("value");
-                $("#modalContent").load("/Reservations/Details/" + id, function() {
+                $("#modalContentDelete").load("/Reservations/Details/" + id, function() {
                     $("#deleteModal").modal("show");
+                });
+            });
+
+            $(".btnCreatePayment").click(function() {
+                var id = $(this).data("value");
+                $("#modalContentCreatePayment").load("/Payments/Store/" + id, function() {
+                    $("#createPaymentModal").modal("show");
+                });
+            });
+
+            $(".btnEditPayment").click(function() {
+                var id = $(this).data("value");
+                $("#modalContentEditPayment").load("/Payments/Edit/" + id, function() {
+                    $("#editPaymentModal").modal("show");
                 });
             });
         });

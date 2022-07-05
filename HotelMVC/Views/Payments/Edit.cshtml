@@ -1,0 +1,27 @@
+﻿@model PaymentModel
+@{
+    ViewData["Title"] = "Modal edição de pagamentos";
+}
+<form asp-controller="Payments" asp-action="Edit" method="post">
+    <div class="modal-body">
+        <div class="modal-body">
+            <input type="hidden" asp-for="ReservationId" />
+            <div class="col-md-12">
+                <label for="inputReservationValue" class="form-label">Valor da reserva</label>
+                <input type="number" asp-for="ReservationValue" class="form-control" id="inputReservation" placeholder="Digite o valor da reserva" readonly>
+            </div>
+            <div class="col-md-12">
+                <label for="inputFormOfPayment" class="form-label">Forma de pagamento</label>
+                <input type="text" asp-for="FormOfPayment" class="form-control" id="inputFormOfPayment" placeholder="Digite a forma de pagamento">
+            </div>
+            <div class="col-md-12">
+                <label for="inputProof" class="form-label">Comprovante</label>
+                <input type="text" asp-for="Proof" class="form-control" id="inputProof" placeholder="Digite o comprovante">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="submit" class="btn btn-warning">Editar</button>
+    </div>
+</form>

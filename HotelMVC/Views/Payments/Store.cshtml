@@ -1,0 +1,27 @@
+﻿@model PaymentStoreViewModel
+@{
+    ViewData["Title"] = "Modal cadastro de pagamentos";
+}
+<form asp-controller="Payments" asp-action="Store" method="post">
+    <div class="modal-body">
+        <div class="modal-body">
+            <input type="hidden" asp-for="Payment.ReservationId" value="@Model.Reservation.Id" />
+            <div class="col-md-12">
+                <label for="inputReservationValue" class="form-label">Valor da reserva</label>
+                <input type="number" asp-for="Payment.ReservationValue" class="form-control" id="inputReservation" placeholder="Digite o valor da reserva" readonly>
+            </div>
+            <div class="col-md-12">
+                <label for="inputFormOfPayment" class="form-label">Forma de pagamento</label>
+                <input type="text" asp-for="Payment.FormOfPayment" class="form-control" id="inputFormOfPayment" placeholder="Digite a forma de pagamento">
+            </div>
+            <div class="col-md-12">
+                <label for="inputProof" class="form-label">Comprovante</label>
+                <input type="text" asp-for="Payment.Proof" class="form-control" id="inputProof" placeholder="Digite o comprovante">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="submit" class="btn btn-success">Cadastrar</button>
+    </div>
+</form>
