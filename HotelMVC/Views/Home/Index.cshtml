@@ -1,10 +1,62 @@
 ﻿@model HomeModel;
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Página inicial";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome, @Model.Nome</h1>
+    <h1 class="display-4">Bem vindo, @Model.Nome</h1>
     <p>@Model.Email.</p>
 </div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card" style="width: 90%">
+            <div class="card-body">
+                <h5 class="card-title">Clientes</h5>
+                <p class="card-text">No momento temos <b>X</b> clientes cadastrados no sistema!</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card" style="width: 90%">
+            <div class="card-body">
+                <h5 class="card-title">Funcionários</h5>
+                <p class="card-text">No momento temos <b>X</b> funcionários cadastrados no sistema!</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card" style="width: 90%">
+            <div class="card-body">
+                <h5 class="card-title">Quartos</h5>
+                <p class="card-text">No momento temos <b>X</b> quartos cadastrados no sistema!</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card" style="width: 90%; height:250px">
+            <div class="card-body">
+                <h5 class="card-title">Clientes</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card" style="width: 95%; height:250px">
+            <div class="card-body">
+                <h5 class="card-title">Funcionários</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+</div>
+
