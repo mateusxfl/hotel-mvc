@@ -1,0 +1,22 @@
+﻿@model CheckinModel
+@{
+    ViewData["Title"] = "Modal cadastro de checkins";
+}
+
+<form asp-controller="Checkins" asp-action="Store" method="post">
+    <div class="modal-body">
+        <input type="hidden" asp-for="ReservationId" value="@Model.ReservationId" />
+        <div class="col-12">
+            <label for="inputEntryDate" class="form-label">Data de entrada</label>
+            <input type="date" asp-for="EntryDate" readonly class="form-control" id="inputEntryDate" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+        </div>
+        <div class="col-12 mt-3">
+            <label for="inputEntryHour" class="form-label">Hora entrada</label>
+            <input type="time" asp-for="EntryHour" readonly class="form-control" id="inputEntryHour" value="@DateTime.Now.ToString("HH:mm")">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="submit" class="btn btn-success">Cadastrar</button>
+    </div>
+</form>

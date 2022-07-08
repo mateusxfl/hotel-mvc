@@ -14,12 +14,19 @@ namespace HotelMVC.Controllers
         private readonly IReservationRepository _reservationRepository;
         private readonly ICustomerRepository _customerRepository;
         private readonly IRoomRepository _roomRepository;
+        private readonly ICheckinRepository _checkinRepository;
 
-        public ReservationsController(IReservationRepository reservationRepository, ICustomerRepository customerRepository, IRoomRepository roomRepository)
+        public ReservationsController(
+            IReservationRepository reservationRepository, 
+            ICustomerRepository customerRepository,
+            IRoomRepository roomRepository,
+            ICheckinRepository checkinRepository
+        )
         {
             _reservationRepository = reservationRepository;
             _customerRepository = customerRepository;
             _roomRepository = roomRepository;
+            _checkinRepository = checkinRepository;
         }
 
         public IActionResult Index()
@@ -27,12 +34,14 @@ namespace HotelMVC.Controllers
             List<ReservationsModel> reservations = _reservationRepository.FindAll();
             List<CustomersModel> customers = _customerRepository.FindAll();
             List<RoomModel> rooms = _roomRepository.FindAll();
+            List<CheckinModel> checkins = _checkinRepository.FindAll();
 
             var viewModel = new ReservationIndexViewModel
             {
                 Reservations = reservations,
                 Customers = customers,
-                Rooms = rooms
+                Rooms = rooms,
+                Checkins = checkins
             };
 
             return View(viewModel);

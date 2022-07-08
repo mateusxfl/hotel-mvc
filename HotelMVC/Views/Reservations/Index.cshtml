@@ -34,7 +34,7 @@
             </tr>
         </thead>
         <tbody>
-            @if(Model != null && Model.Reservations.Any())
+            @if (Model != null && Model.Reservations.Any())
             {
                 foreach (HotelMVC.Models.ReservationModels.ReservationsModel reservation in Model.Reservations)
                 {
@@ -57,13 +57,17 @@
                                     <button role="button" class="btn btn-danger btnCreatePayment" data-value="@reservation.Id">PAY</button>
                                 }
 
-                                @if (@reservation.Status == 1 @*&& Model.Checkin.Find(r => r.Id == reservation.RoomId) == null*@)
+                                @if (@reservation.Status == 1 && @Model.Checkins.Find(c => c.ReservationId == reservation.Id) == null)
                                 {
-                                    <button role="button" class="btn btn-primary btnCheckIn" data-value="@reservation.Id">IN</button>
+                                    <button role="button" class="btn btn-primary btnCreateCheckIn" data-value="@reservation.Id">IN</button>
+                                }
+                                else if (@reservation.Status == 1 && @Model.Checkins.Find(c => c.ReservationId == reservation.Id) != null)
+                                {
+                                    <button role="button" class="btn btn-primary btnDetailsCheckIn" data-value="@reservation.Id">IN</button>
                                 }
                                 else
                                 {
-                                    <button role="button" class="btn btn-primary btnCheckIn" data-value="@reservation.Id">IN</button>
+                                    <button role="button" disabled class="btn btn-primary">IN</button>
                                 }
 
                                 @if (@reservation.Status == 1 @*&& Model.Checkin.Find(r => r.Id == reservation.RoomId) == null*@)
@@ -92,13 +96,13 @@
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div id="modalContentDelete"></div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="modalContentDelete"></div>
         </div>
     </div>
 </div>
@@ -106,13 +110,13 @@
 <div class="modal fade" id="createPaymentModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Cadastro de pagamentos</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div id="modalContentCreatePayment"></div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cadastro de pagamentos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="modalContentCreatePayment"></div>
         </div>
     </div>
 </div>
@@ -120,18 +124,18 @@
 <div class="modal fade" id="editPaymentModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Edição de pagamentos</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div id="modalContentEditPayment"></div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edição de pagamentos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="modalContentEditPayment"></div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="entryModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal fade" id="createCheckinModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -140,20 +144,21 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="col-12">
-                    <label for="inputEntryDate" class="form-label">Data de entrada</label>
-                    <input type="date" readonly class="form-control" id="inputEntryDate" value="@DateTime.Now.ToString("yyyy-MM-dd")">
-                </div>
-                <div class="col-12 mt-3">
-                    <label for="inputEntryHour" class="form-label">Hora entrada</label>
-                    <input type="time" readonly class="form-control" id="inputEntryHour" value="@DateTime.Now.ToString("HH:mm")">
-                </div>
+            <div id="modalContentCreateCheckin"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="detailsCheckinModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Realizar CHECK-IN</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary">Confirmar</button>
-            </div>
+            <div id="modalContentDetailsCheckin"></div>
         </div>
     </div>
 </div>
@@ -162,7 +167,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Realizar CHECK-OUT</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Detalhes CHECK-OUT</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -187,7 +192,7 @@
 
 @section Scripts {
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#myTable').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
@@ -214,6 +219,22 @@
                     $("#editPaymentModal").modal("show");
                 });
             });
+
+            $(".btnCreateCheckIn").click(function() {
+                var id = $(this).data("value");
+                $("#modalContentCreateCheckin").load("/Checkins/Store/" + id, function() {
+                    $("#createCheckinModal").modal("show");
+                });
+            });
+
+            $(".btnDetailsCheckIn").click(function() {
+                var id = $(this).data("value");
+                $("#modalContentDetailsCheckin").load("/Checkins/Index/" + id, function() {
+                    $("#detailsCheckinModal").modal("show");
+                });
+            });
+
+            btnCreateCheckIn
         });
     </script>
 }

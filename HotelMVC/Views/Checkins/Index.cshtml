@@ -1,0 +1,18 @@
+﻿@model CheckinModel
+@{
+    ViewData["Title"] = "Modal visualização de checkins";
+}
+
+<div class="modal-body">
+    <div class="col-12">
+        <label for="inputEntryDate" class="form-label">Data de entrada</label>
+        <input type="date" asp-for="EntryDate" readonly class="form-control" id="inputEntryDate">
+    </div>
+    <div class="col-12 mt-3">
+        <label for="inputEntryHour" class="form-label">Hora entrada</label>
+        <input type="time" asp-for="EntryHour" readonly class="form-control" id="inputEntryHour">
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+</div>

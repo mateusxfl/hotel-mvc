@@ -7,6 +7,7 @@ namespace HotelMVC.Models.ReservationModels
         public List<ReservationsModel> Reservations { get; set; }
         public List<CustomersModel> Customers { get; set; }
         public List<RoomModel> Rooms { get; set; }
-        public PaymentModel Payment { get; set; }
+        public List<CheckinModel> Checkins { get; set; }
+
     }
 }
