@@ -14,19 +14,25 @@ namespace HotelMVC.Controllers
         private readonly IReservationRepository _reservationRepository;
         private readonly ICustomerRepository _customerRepository;
         private readonly IRoomRepository _roomRepository;
+        private readonly IPaymentRepository _paymentRepository;
         private readonly ICheckinRepository _checkinRepository;
+        private readonly ICheckoutRepository _checkoutRepository;
 
         public ReservationsController(
             IReservationRepository reservationRepository, 
             ICustomerRepository customerRepository,
             IRoomRepository roomRepository,
-            ICheckinRepository checkinRepository
+            IPaymentRepository paymentRepository,
+            ICheckinRepository checkinRepository,
+            ICheckoutRepository checkoutRepository
         )
         {
             _reservationRepository = reservationRepository;
             _customerRepository = customerRepository;
             _roomRepository = roomRepository;
+            _paymentRepository = paymentRepository;
             _checkinRepository = checkinRepository;
+            _checkoutRepository = checkoutRepository;
         }
 
         public IActionResult Index()
@@ -34,14 +40,18 @@ namespace HotelMVC.Controllers
             List<ReservationsModel> reservations = _reservationRepository.FindAll();
             List<CustomersModel> customers = _customerRepository.FindAll();
             List<RoomModel> rooms = _roomRepository.FindAll();
+            List<PaymentModel> payments = _paymentRepository.FindAll();
             List<CheckinModel> checkins = _checkinRepository.FindAll();
+            List<CheckoutModel> checkouts = _checkoutRepository.FindAll();
 
             var viewModel = new ReservationIndexViewModel
             {
                 Reservations = reservations,
                 Customers = customers,
                 Rooms = rooms,
-                Checkins = checkins
+                Payments = payments,
+                Checkins = checkins,
+                Checkouts = checkouts
             };
 
             return View(viewModel);

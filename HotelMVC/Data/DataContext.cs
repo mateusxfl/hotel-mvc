@@ -21,5 +21,7 @@ namespace HotelMVC.Data
         public DbSet<PaymentModel> Payments { get; set; }
 
         public DbSet<CheckinModel> Checkins { get; set; }
+
+        public DbSet<CheckoutModel> Checkouts { get; set; }
     }
 }

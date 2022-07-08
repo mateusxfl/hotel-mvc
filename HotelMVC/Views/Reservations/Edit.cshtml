@@ -33,60 +33,9 @@
         <label for="inputExpectedDepartureDate" class="form-label">Data de saída esperada</label>
         <input type="date" asp-for="Reservation.ExpectedDepartureDate" class="form-control" id="inputExpectedDepartureDate">
     </div>
-    <div class="col-md-12">
-        <label for="status">Status da reserva</label>
-        <div class="col-md-12">
-            <div class="row">
-                <div class="form-check mr-4" id="status">
-                    <input class="form-check-input statusReservation" asp-for="Reservation.Status" value="1" type="radio" id="statusReservationConfirmed">
-                    <label class="form-check-label" for="statusReservationConfirmed">
-                        Confirmada
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input statusReservation" asp-for="Reservation.Status" value="0" type="radio" id="statusReservationNotConfirmed">
-                    <label class="form-check-label" for="statusReservationNotConfirmed">
-                        Não confirmada
-                    </label>
-                </div>
-            </div>
-        </div>
-    </div>
-
-   @* <div class="col-md-12 mt-1" id="payment" style="display: none;">
-        <hr />
-        <div class="row">
-            <div class="col-md-4">
-                <label for="inputReservationValue" class="form-label">Valor da reserva</label>
-                <input type="number" class="form-control" id="inputReservation" placeholder="Digite o valor da reserva" readonly>
-            </div>
-            <div class="col-md-4">
-                <label for="inputFormOfPayment" class="form-label">Forma de pagamento</label>
-                <input type="text" class="form-control" id="inputFormOfPayment" placeholder="Digite a forma de pagamento">
-            </div>
-            <div class="col-md-4">
-                <label for="inputProof" class="form-label">Comprovante</label>
-                <input type="text" class="form-control" id="inputProof" placeholder="Digite o comprovante">
-            </div>
-        </div>
-    </div>*@
-
+    <input type="hidden" asp-for="Reservation.Status"/>
     <div class="col-12 mt-4">
         <button type="submit" class="btn btn-primary">Cadastrar</button>
         <a class="btn btn-secondary" asp-controller="Reservations" asp-action="Index" role="button">Voltar</a>
     </div>
 </form>
-
-@section Scripts {
-@*    <script>
-        $(".statusReservation").click(function () {
-            var value = $('input:radio[name=status]:checked').val();
-
-            if (value == 1) {
-                $('#payment').css({"display": ""});
-            } else {
-                $('#payment').css({ "display": "none" });
-            }
-        });
-    </script>*@
-}

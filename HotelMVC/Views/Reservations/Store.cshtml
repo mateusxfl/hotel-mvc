@@ -32,25 +32,7 @@
         <label for="inputExpectedDepartureDate" class="form-label">Data de saída esperada</label>
         <input type="date" asp-for="Reservation.ExpectedDepartureDate" class="form-control" id="inputExpectedDepartureDate">
     </div>
-    <div class="col-md-12">
-        <label for="status">Status da reserva</label>
-        <div class="col-md-12">
-            <div class="row">
-                <div class="form-check mr-4" id="status">
-                    <input class="form-check-input statusReservation" asp-for="Reservation.Status" value="1" type="radio" id="statusReservationConfirmed">
-                    <label class="form-check-label" for="statusReservationConfirmed">
-                        Confirmada
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input statusReservation" asp-for="Reservation.Status" value="0" type="radio" id="statusReservationNotConfirmed">
-                    <label class="form-check-label" for="statusReservationNotConfirmed">
-                        Não confirmada
-                    </label>
-                </div>
-            </div>
-        </div>
-    </div>
+    <input type="hidden" asp-for="Reservation.Status" value="0"/>
     <div class="col-12 mt-4">
         <button type="submit" class="btn btn-primary">Cadastrar</button>
         <a class="btn btn-secondary" asp-controller="Reservations" asp-action="Index" role="button">Voltar</a>

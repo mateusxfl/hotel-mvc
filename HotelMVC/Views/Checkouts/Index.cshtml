@@ -1,0 +1,18 @@
+﻿@model CheckoutModel
+@{
+    ViewData["Title"] = "Modal visualização de checkouts";
+}
+
+<div class="modal-body">
+    <div class="col-12">
+        <label for="inputExitDate" class="form-label">Data de saída</label>
+        <input type="date" asp-for="ExitDate" readonly class="form-control" id="inputExitDate">
+    </div>
+    <div class="col-12 mt-3">
+        <label for="inputExitHour" class="form-label">Hora saída</label>
+        <input type="time" asp-for="ExitHour" readonly class="form-control" id="inputExitHour">
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+</div>

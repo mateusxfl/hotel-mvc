@@ -48,9 +48,13 @@
                         <td>@(@reservation.Status == 1 ? "Confirmado" : "Não confirmado")</td>
                         <td>
                             <div class="btn-group" role="group">
-                                @if (@reservation.Status == 1)
+                                @if (Model.Checkouts.Find(c => c.ReservationId == reservation.Id) != null)
                                 {
-                                    <button role="button" class="btn btn-danger btnEditPayment" data-value="@reservation.Id">PAY</button>
+                                    <button role="button" disabled class="btn btn-danger">PAY</button>
+                                }
+                                else if (@reservation.Status == 1 )
+                                {
+                                    <button role="button" class="btn btn-danger btnEditPayment" data-value="@Model.Payments.Find(p => p.ReservationId == reservation.Id).Id">PAY</button>
                                 }
                                 else
                                 {
@@ -61,7 +65,7 @@
                                 {
                                     <button role="button" class="btn btn-primary btnCreateCheckIn" data-value="@reservation.Id">IN</button>
                                 }
-                                else if (@reservation.Status == 1 && @Model.Checkins.Find(c => c.ReservationId == reservation.Id) != null)
+                                else if (@Model.Checkins.Find(c => c.ReservationId == reservation.Id) != null)
                                 {
                                     <button role="button" class="btn btn-primary btnDetailsCheckIn" data-value="@reservation.Id">IN</button>
                                 }
@@ -70,20 +74,32 @@
                                     <button role="button" disabled class="btn btn-primary">IN</button>
                                 }
 
-                                @if (@reservation.Status == 1 @*&& Model.Checkin.Find(r => r.Id == reservation.RoomId) == null*@)
+                                @if (@Model.Checkins.Find(c => c.ReservationId == reservation.Id) != null && Model.Checkouts.Find(c => c.ReservationId == reservation.Id) == null)
                                 {
-                                    <button role="button" class="btn btn-info btnCheckOut" data-value="@reservation.Id">OUT</button>
+                                    <button role="button" class="btn btn-info btnCreateCheckOut" data-value="@reservation.Id">OUT</button>
+                                }
+                                else if (Model.Checkouts.Find(c => c.ReservationId == reservation.Id) != null)
+                                {
+                                    <button role="button" class="btn btn-info btnDetailsCheckOut" data-value="@reservation.Id">OUT</button>
                                 }
                                 else
                                 {
-                                    <button role="button" class="btn btn-info btnCheckOut" data-value="@reservation.Id">OUT</button>
+                                    <button role="button" disabled class="btn btn-info">OUT</button>
                                 }
                             </div>
                         </td>
                         <td>
                             <div class="btn-group" role="group">
-                                <a role="button" asp-route-id="@reservation.Id" asp-controller="Reservations" asp-action="Edit" class="btn btn-warning">Editar</a>
-                                <a role="button" class="btn btn-danger btnDelete" data-value="@reservation.Id">Apagar</a>
+                                @if (@reservation.Status == 1 )
+                                {
+                                    <button role="button" disabled class="btn btn-warning">Editar</button>
+                                    <button role="button" disabled class="btn btn-danger">Apagar</button>
+                                }
+                                else
+                                {
+                                    <a role="button" asp-route-id="@reservation.Id" asp-controller="Reservations" asp-action="Edit" class="btn btn-warning">Editar</a>
+                                    <a role="button" class="btn btn-danger btnDelete" data-value="@reservation.Id">Apagar</a>
+                                }
                             </div>
                         </td>
                     </tr>
@@ -93,98 +109,101 @@
     </table>
 </div>
 
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div id="modalContentDelete"></div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="createPaymentModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Cadastro de pagamentos</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div id="modalContentCreatePayment"></div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="editPaymentModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edição de pagamentos</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div id="modalContentEditPayment"></div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="createCheckinModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Realizar CHECK-IN</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div id="modalContentCreateCheckin"></div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="detailsCheckinModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Realizar CHECK-IN</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div id="modalContentDetailsCheckin"></div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="exitModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Detalhes CHECK-OUT</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="col-12">
-                    <label for="inputExitDate" class="form-label">Data de saída</label>
-                    <input type="date" readonly class="form-control" id="inputExitDate" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+<div>
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmação</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="col-12 mt-3">
-                    <label for="inputExitHour" class="form-label">Hora saída</label>
-                    <input type="time" readonly class="form-control" id="inputExitHour" value="@DateTime.Now.ToString("HH:mm")">
-                </div>
+                <div id="modalContentDelete"></div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary">Confirmar</button>
+        </div>
+    </div>
+
+    <div class="modal fade" id="createPaymentModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cadastro de pagamentos</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="modalContentCreatePayment"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editPaymentModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edição de pagamentos</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="modalContentEditPayment"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="createCheckinModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Realizar CHECK-IN</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="modalContentCreateCheckin"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="detailsCheckinModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Detalhes CHECK-IN</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="modalContentDetailsCheckin"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="createCheckoutModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Realizar CHECK-OUT</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="modalContentCreateCheckout"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="detailsCheckoutModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Detalhes CHECK-OUT</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="modalContentDetailsCheckout"></div>
             </div>
         </div>
     </div>
@@ -231,6 +250,20 @@
                 var id = $(this).data("value");
                 $("#modalContentDetailsCheckin").load("/Checkins/Index/" + id, function() {
                     $("#detailsCheckinModal").modal("show");
+                });
+            });
+
+            $(".btnCreateCheckOut").click(function() {
+                var id = $(this).data("value");
+                $("#modalContentCreateCheckout").load("/Checkouts/Store/" + id, function() {
+                    $("#createCheckoutModal").modal("show");
+                });
+            });
+
+            $(".btnDetailsCheckOut").click(function() {
+                var id = $(this).data("value");
+                $("#modalContentDetailsCheckout").load("/Checkouts/Index/" + id, function() {
+                    $("#detailsCheckoutModal").modal("show");
                 });
             });
 

@@ -1,0 +1,22 @@
+﻿@model CheckoutModel
+@{
+    ViewData["Title"] = "Modal cadastro de checkouts";
+}
+
+<form asp-controller="Checkouts" asp-action="Store" method="post">
+    <div class="modal-body">
+        <input type="hidden" asp-for="ReservationId" value="@Model.ReservationId" />
+        <div class="col-12">
+            <label for="inputExitDate" class="form-label">Data de saída</label>
+            <input type="date" asp-for="ExitDate" readonly class="form-control" id="inputExitDate" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+        </div>
+        <div class="col-12 mt-3">
+            <label for="inputExitHour" class="form-label">Hora saída</label>
+            <input type="time" asp-for="ExitHour" readonly class="form-control" id="inputExitHour" value="@DateTime.Now.ToString("HH:mm")">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="submit" class="btn btn-success">Cadastrar</button>
+    </div>
+</form>

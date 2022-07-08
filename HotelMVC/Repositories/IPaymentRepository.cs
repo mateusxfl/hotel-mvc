@@ -9,6 +9,8 @@ namespace HotelMVC.Repositories
 
         PaymentModel FindById(int id);
 
+        List<PaymentModel> FindAll();
+
         PaymentModel Update(PaymentModel payment);
     }
 }

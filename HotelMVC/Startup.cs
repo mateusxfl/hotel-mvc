@@ -35,6 +35,7 @@ namespace HotelMVC
             services.AddScoped<IReservationRepository, ReservationRepository>();
             services.AddScoped<IPaymentRepository, PaymentRepository>();
             services.AddScoped<ICheckinRepository, CheckinRepository>();
+            services.AddScoped<ICheckoutRepository, CheckoutRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

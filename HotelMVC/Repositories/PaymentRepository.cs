@@ -27,6 +27,11 @@ namespace HotelMVC.Repositories
             return paymentStoreView.Payment;
         }
 
+        public List<PaymentModel> FindAll()
+        {
+            return _dataContext.Payments.ToList();
+        }
+
         public PaymentModel FindById(int id)
         {
             return _dataContext.Payments.FirstOrDefault(p => p.Id == id);
